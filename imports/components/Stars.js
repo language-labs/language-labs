@@ -59,8 +59,11 @@ class Rating extends React.Component {
       );
     }
     return (
-      <div>
-        {stars}
+      <div className='stars'>
+        <div>
+         {stars}
+        </div>
+        <br />
         <button className='review-submit' 
           onClick={this.props.submit.bind(null, this.state.rating)}> 
             Submit 

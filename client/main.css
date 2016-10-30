@@ -3,7 +3,7 @@
 /* These are temporary classes... just to make it so .suggestion and .clock
  * aren't on top of each other
 */
-.suggestion {
+/*.suggestion {
   float: right;
 }
 
@@ -45,3 +45,4 @@ h1, h2, h3, h4, h5 {
 .review {
   z-index: -1000;
 }
+*/

@@ -31,10 +31,14 @@ class Review extends React.Component {
 
   render() {
     return (
-      <div className='Review'>
-        <h4> Please help <i>{Meteor.user().username}</i> by giving them some feedback</h4>
-        <h2> Rate how helpful they were on a scale of 1 to 5 </h2>
-        <Stars submit={this.handleSubmit.bind(this)} />
+      <div className='review'>
+        <span> 
+          Help out your partner by giving them some feedback
+        </span>
+        <h2> How was your conversation? </h2>
+        <Stars 
+          submit={this.handleSubmit.bind(this)} 
+        />
       </div>
     );
   }

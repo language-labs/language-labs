@@ -13,8 +13,9 @@ class Dashboard extends React.Component {
     super(props);
 
     this.state = {
-      inCall: true,
-      callDone: false
+      inCall: false,
+      callDone: true,
+      initialCall: true
     };
   }
 
@@ -30,12 +31,7 @@ class Dashboard extends React.Component {
       
       // give the current user a peerId
       Meteor.users.update({_id: Meteor.userId()}, {
-        $set: {
-          profile: {
-            peerId: peer.id,
-            language: 'German'
-          }
-        }
+        $set: { 'profile.peerId': peer.id }
       });
 
       // find other person to call
@@ -60,10 +56,19 @@ class Dashboard extends React.Component {
   }
 
   toggleCall() {
-    console.log('incall', this.state.inCall);
-    this.setState({
-      inCall: !this.state.inCall
-    });
+
+    if (this.state.initialCall) {
+      this.setState({
+        initialCall: false,
+        inCall: !this.state.inCall,
+        callDone: !this.state.callDone
+      });
+    } else {
+      this.setState({
+        inCall: !this.state.inCall,
+        callDone: !this.state.callDone
+      });
+    }
   }
 
   render() {
@@ -71,13 +76,23 @@ class Dashboard extends React.Component {
       <div className='dashboard'>
         <div className='top'>
           <div className='video-box'>
-            <div className='video-wrapper'>
-              <video ref='myVideo' id='myVideo' muted='true' autoPlay='true'></video>
-              <video ref='theirVideo' id='theirVideo' autoPlay='true'></video>
-            </div>
-          {/*We'll need to figure out how to switch between video view and review view elegantly*/}
-            {!this.state.inCall &&
-                <Review />
+            {this.state.inCall ?
+              <div className='video-wrapper'>
+                <video 
+                  ref='myVideo' 
+                  id='myVideo' 
+                  muted='true' 
+                  autoPlay='true'
+                ></video>
+                <video 
+                  ref='theirVideo' 
+                  id='theirVideo' 
+                  autoPlay='true'
+                ></video>
+              </div>
+              : this.state.callDone && !this.state.initialCall
+                ? <Review />
+                : <p>Waiting</p>
             }
           </div>
           <div className='profile'>
@@ -92,18 +107,28 @@ class Dashboard extends React.Component {
             <Clock />
             <TopicSuggestion />
             {/*This button toggles call on/off to conditionally render call or review logic */}
-            <button className='toggleCall' onClick={this.toggleCall.bind(this)}> Toggle call </button>
           </div>
           <div className='new-chat'>
             <div className='selected-language'>
-              Selected Language
+              Selected Languages
             </div>
             <div className='language'>
-              {this.props.language}
+              {
+               `${this.props.user.profile.language} / 
+                ${this.props.user.profile.learning}`
+              }
             </div>
             <div className='button-wrapper'>
-              <button onClick={() => this.startChat(this.props.onlineUsers, this.props.peer)}>
-                {!this.state.inCall ? 'Start Chat' : 'Waiting'}
+              <button 
+                onClick={() => {
+                  this.toggleCall();
+                  setTimeout(() => {
+                    this.startChat(this.props.onlineUsers, this.props.peer)
+                  }, 100)
+                }}
+              > {this.state.inCall 
+                  ? 'End Chat' 
+                  : 'Start Chat'}
               </button>
             </div>
           </div>

@@ -6,20 +6,44 @@ class SelectLanguage extends React.Component {
     super(props)
 
     this.state = {
-      submitButton: false
+      currentStage: 0,
+      stages: [
+        { 
+          placeholder:  'What language do you speak?',
+          propertyName: 'language'
+        },{ 
+          placeholder:  'What language do you want to learn?',
+          propertyName: 'learning'
+        },{ 
+          placeholder:  'Where are you located?',
+          propertyName: 'location'
+        },{ 
+          placeholder:  'List some of your interests.',
+          propertyName: 'interests',
+          instructions: 'Place a comma after each entry'
+        }
+      ],
     }
   }
 
   updateUser(event) {
     event.preventDefault();
-    Meteor.users.update(this.props.id, {$set: {'profile.language': this.languageInput.value}});
-    this.languageInput.value = "";
-  }
 
-  toggleSubmit() {
-    this.setState({
-      submitButton: true
-    });
+    let query = {}
+    let property = 'profile.' + this.state.stages[this.state.currentStage].propertyName
+
+    query[property] = this.languageInput.value
+
+    Meteor.users.update(this.props.id, {$set: query});
+    this.languageInput.value = "";
+
+    if (this.state.currentStage < 3) {
+      this.setState({
+        currentStage: this.state.currentStage + 1
+      });
+    } else {
+      Meteor.users.update(this.props.id, {$set: {'profile.complete': true}});
+    }
   }
 
   render() {
@@ -28,28 +52,26 @@ class SelectLanguage extends React.Component {
         <form 
           className='language-form'
           onSubmit={this.updateUser.bind(this)}
-        >
+        > 
+         <div className='form-instructions'>
+           {this.state.stages[this.state.currentStage].instructions || ''}
+         </div>
           <input 
             type="text" 
-            placeholder="Choose A Language"
+            placeholder={this.state.stages[this.state.currentStage].placeholder}
             ref={(ref) => this.languageInput = ref}
-            onFocus={this.toggleSubmit.bind(this)}
           />
+          <br />
           <button 
             type="submit" 
-            className={
-              this.state.submitButton 
-                ? 'submit-button'
-                : 'hidden'}
-            onFocus={this.updateUser.bind(this)}
-          > <i className="fa fa-check" 
-               aria-hidden="true"
-            ></i>
+            className='submit-button'
+          > ENTER 
           </button>
         </form>
       </div>
     );
   }
 }
+
 
 export default SelectLanguage;

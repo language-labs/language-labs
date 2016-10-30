@@ -7,10 +7,10 @@ class UserProfile extends React.Component {
     super(props)
 
     this.state = {
-      language: Meteor.user().profile.language || '',
-      learning: Meteor.user().profile.learning || '',
-      location: Meteor.user().profile.location || '',
-      bio:      Meteor.user().profile.bio      || '',
+      language:  Meteor.user().profile.language  || '',
+      learning:  Meteor.user().profile.learning  || '',
+      location:  Meteor.user().profile.location  || '',
+      interests: Meteor.user().profile.interests || '',
     }
   }
 
@@ -30,8 +30,8 @@ class UserProfile extends React.Component {
     if (update === 'location') {
       return Meteor.users.update(id, {$set: {'profile.location': newData}});
     }
-    if (update === 'bio') {
-      return Meteor.users.update(id, {$set: {'profile.bio': newData}});
+    if (update === 'interests') {
+      return Meteor.users.update(id, {$set: {'profile.interests': newData}});
     }
   }
 
@@ -79,13 +79,13 @@ class UserProfile extends React.Component {
         </div>
         <div className='profile-input-wrapper'>
           <div className='title'>
-            About
+            Interests
             <i className="fa fa-pencil" aria-hidden="true"></i>
           </div>
           <InlineEdit
             activeClassName="editing"
-            text={this.state.bio}
-            paramName="bio"
+            text={this.state.interests}
+            paramName="interests"
             change={this.update.bind(this)}
             className='profile-input'
           />

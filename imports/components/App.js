@@ -5,6 +5,17 @@ import HomePage       from './HomePage';
 import SelectLanguage from './SelectLanguage';
 
 
+const validateProfile = (obj, ...args) => {
+  for (var i = 0; i < args.length; i++) {
+    if (!obj || !obj.hasOwnProperty(args[i])) {
+      return false
+    }
+    obj = obj[args[i]];
+  }
+  return true;
+}
+
+
 const App = ({
   onlineUsers, 
   user, 
@@ -12,7 +23,7 @@ const App = ({
   peer
 }) => {
   if (!loading && user) {
-    if (!user.profile) {
+    if (!validateProfile(user, 'profile', 'complete')) {
       return (
         <SelectLanguage id={Meteor.userId()} /> 
       );

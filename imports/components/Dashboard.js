@@ -226,7 +226,7 @@ class Dashboard extends React.Component {
                 !this.state.speechToText ? 
                 <Clock partner={this.state.partner} callDone={this.state.callDone} handleSpeechActive={this.handleSpeechActive.bind(this)}/>
                 :
-                <SpeechToTextBox handleSpeechActive={this.handleSpeechActive.bind(this)} languageToLearn={this.props.user.profile.learning.toLowerCase()}/>
+                <SpeechToTextBox handleSpeechActive={this.handleSpeechActive.bind(this)} currentLanguage={this.props.user.profile.language.toLowerCase()} languageToLearn={this.props.user.profile.learning.toLowerCase()}/>
               }
                 <GoogleTranslate translated={this.state.translated} handleTextChange={this.handleTextChange.bind(this)} handleTextSubmit={this.handleTextSubmit.bind(this)}/>
               </div>

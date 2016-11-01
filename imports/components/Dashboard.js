@@ -148,8 +148,11 @@ class Dashboard extends React.Component {
 
   handleTextSubmit() {
     var textToTranslate = this.state.translate;
-    var sourceLang = languageCodes[this.props.user.profile.language];
-    var targetLang = languageCodes[this.props.user.profile.learning];
+    console.log('language in props: ', this.props.user.profile.language.toLowerCase());
+    var sourceLang = languageCodes[this.props.user.profile.language.toLowerCase()];
+    console.log('language code: ', sourceLang.toLowerCase());
+
+    var targetLang = languageCodes[this.props.user.profile.learning.toLowerCase()];
     var context = this;
 
 

@@ -9,6 +9,9 @@ import TopicSuggestion   from './TopicSuggestion';
 import Review            from './Review';
 import Waiting           from './Waiting';
 import Welcome           from './Welcome';
+import GoogleTranslate   from './GoogleTranslate';
+var request = require('request');
+var languageCodes = require( '../../public/languageCodes');
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -19,7 +22,9 @@ class Dashboard extends React.Component {
       currentCall: false,
       callDone: false,
       callLoading: false,
-      partner: false
+      partner: false,
+      translate: null,
+      translated: null
     };
 
     this.startChat.bind(this);
@@ -133,6 +138,42 @@ class Dashboard extends React.Component {
     });
   }
 
+  handleTextChange(e) {
+    var text = e.target.value;
+    this.setState({
+      translate: text,
+      translated: null
+    });
+  };
+
+  handleTextSubmit() {
+    var textToTranslate = this.state.translate;
+    var sourceLang = languageCodes[this.props.user.profile.language];
+    var targetLang = languageCodes[this.props.user.profile.learning];
+    var context = this;
+
+
+
+    var url = 'https://www.googleapis.com/language/translate/v2?key=AIzaSyC9JmWKmSXKwWuB82g3aZKF9yiIczu5pao&q=' + 
+              textToTranslate +
+              '&source=' + sourceLang + '&'
+              + 'target=' + targetLang;
+
+    request.get(url, function(err, res, body) {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log(JSON.parse(body).data.translations[0].translatedText);
+        var translatedText = (JSON.parse(body).data.translations[0].translatedText);
+        console.log('this is the translated text', translatedText);
+        context.setState({
+          translated: translatedText
+        });
+        console.log('this is what state looks like', context.state.translated);
+      }
+    });
+  }
+
   render() {
     return (
       <div className='dashboard'>
@@ -173,7 +214,7 @@ class Dashboard extends React.Component {
               this.state.partner &&
               <div className='clock-suggestion-wrapper'>
                 <Clock partner={this.state.partner} callDone={this.state.callDone} />
-                <TopicSuggestion partner={this.state.partner}/>
+                <GoogleTranslate translated={this.state.translated} handleTextChange={this.handleTextChange.bind(this)} handleTextSubmit={this.handleTextSubmit.bind(this)}/>
               </div>
             }
             {

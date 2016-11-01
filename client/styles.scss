@@ -21,6 +21,36 @@ body {
   }
 }
 
+.googleTranslateInput {
+  margin-bottom : 10px;
+}
+
+.button-wrapper {
+  flex: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .googleTranslateButton {
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'quicksand';
+    color: $blue;
+    border-radius: 4px;
+    width: 100%;
+    height: 20px;
+    background: transparent;
+    border: 2px solid $blue;
+    font-size: 12px;
+    transition: all .3s;
+
+    &:hover {
+      background: $blue;
+      color: white;
+    }
+  }
+}
+
 .hidden {
   display: none;
 }

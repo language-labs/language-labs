@@ -11,7 +11,9 @@ class Stats extends React.Component {
     //Gets full user data from database
     var user = Meteor.users.find({'_id': Meteor.user()._id}).fetch()[0];
     //Compute avg rating for user
+
     var ratings = user.reviews || [];
+
     var count = 0;
     for (var i = 0; i < ratings.length; i++) {
       count += ratings[i];

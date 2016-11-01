@@ -50,6 +50,7 @@ class Clock extends React.Component {
     });
   }
 
+
   render() {
     //Start timer when video chat starts
     if (this.props.partner && this.state.timerUnused) {
@@ -63,10 +64,13 @@ class Clock extends React.Component {
     return (
       <div className='clock'>
         <i className="fa fa-clock-o" aria-hidden="true"></i>
-        <h3>  It's time to speak {this.state.language} </h3>
-        <h1> 
+        <h4>  It's time to speak {this.state.language} </h4>
+        <h3> 
           {this.state.printable} 
-        </h1>
+        </h3>
+        <div className="button-wrapper">
+          <button className="toggleButton"  onClick={this.props.handleSpeechActive.bind(this)}> Live Translate! </button>
+        </div>
       </div>
     );
   }

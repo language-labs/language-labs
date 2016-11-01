@@ -14,6 +14,7 @@ var populateObj = function(languages) {
 	}
 }
 populateObj(languages);
+console.log(languageCodes);
 
 module.exports = languageCodes;
 

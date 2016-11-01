@@ -10,6 +10,7 @@ import Review            from './Review';
 import Waiting           from './Waiting';
 import Welcome           from './Welcome';
 import GoogleTranslate   from './GoogleTranslate';
+import SpeechToTextBox   from './SpeechToTextBox';
 var request = require('request');
 var languageCodes = require( '../../public/languageCodes');
 
@@ -24,7 +25,8 @@ class Dashboard extends React.Component {
       callLoading: false,
       partner: false,
       translate: null,
-      translated: null
+      translated: null,
+      speechToText: false
     };
 
     this.startChat.bind(this);
@@ -146,10 +148,17 @@ class Dashboard extends React.Component {
     });
   };
 
+  handleSpeechActive(e) {
+    console.log('hit live translate button!');
+    this.setState({
+      speechToText: !this.state.speechToText
+    });
+  }
+
   handleTextSubmit() {
     var textToTranslate = this.state.translate;
-    var sourceLang = languageCodes[this.props.user.profile.language];
-    var targetLang = languageCodes[this.props.user.profile.learning];
+    var sourceLang = languageCodes[this.props.user.profile.language].toLowerCase();
+    var targetLang = languageCodes[this.props.user.profile.learning].toLowerCase();
     var context = this;
 
 
@@ -212,8 +221,13 @@ class Dashboard extends React.Component {
           <div className='text-box'>
             { 
               this.state.partner &&
-              <div className='clock-suggestion-wrapper'>
-                <Clock partner={this.state.partner} callDone={this.state.callDone} />
+              <div className='clock-suggestion-wrapper'> 
+              {
+                !this.state.speechToText ? 
+                <Clock partner={this.state.partner} callDone={this.state.callDone} handleSpeechActive={this.handleSpeechActive.bind(this)}/>
+                :
+                <SpeechToTextBox handleSpeechActive={this.handleSpeechActive.bind(this)} languageToLearn={this.props.user.profile.learning.toLowerCase()}/>
+              }
                 <GoogleTranslate translated={this.state.translated} handleTextChange={this.handleTextChange.bind(this)} handleTextSubmit={this.handleTextSubmit.bind(this)}/>
               </div>
             }

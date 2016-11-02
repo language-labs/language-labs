@@ -52,7 +52,7 @@ class SelectLanguage extends React.Component {
         <form 
           className='language-form'
           onSubmit={this.updateUser.bind(this)}
-        > 
+        >   
          <div className='form-instructions'>
            {this.state.stages[this.state.currentStage].instructions || ''}
          </div>

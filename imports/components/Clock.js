@@ -40,15 +40,33 @@ class Clock extends React.Component {
     print = mins + ':' + print;
 
     //toggle between languages every 5 minutes
-    var language = mins % 10 < 5 ? this.state.languages[0] : this.state.languages[1];
-    
+    var current = '';
+    var notCurrent = '';
+
+    if (mins % 10 < 1) {
+      current = this.state.languages[0];
+      notCurrent = this.state.languages[1];
+    } else {
+      current = this.state.languages[1];
+      notCurrent = this.state.languages[0];
+    }
+
     this.setState({
       seconds: secs,
       minutes: mins,
       printable: print,
-      language: language
+      language: current,
+      notLanguage: notCurrent
     });
   }
+
+  clickHandler(e) {
+    e.preventDefault();
+    console.log('this is the current language', this.state.language.toLowerCase());
+    this.props.handleSpeechActive.call();
+    this.props.setCurrentLanguage.call(this, this.state.language.toLowerCase(), this.state.notLanguage.toLowerCase());  
+  }
+
 
   render() {
     //Start timer when video chat starts
@@ -63,10 +81,13 @@ class Clock extends React.Component {
     return (
       <div className='clock'>
         <i className="fa fa-clock-o" aria-hidden="true"></i>
-        <h3>  It's time to speak {this.state.language} </h3>
-        <h1> 
+        <h4>  It's time to speak {this.state.language} </h4>
+        <h3> 
           {this.state.printable} 
-        </h1>
+        </h3>
+        <div className="button-wrapper">
+          <button className="toggleButton"  onClick={this.clickHandler.bind(this)}> Live Translate! </button>
+        </div>
       </div>
     );
   }

@@ -10,15 +10,14 @@ Additional features built by us:
  2. Text area for users to translate from language known to language to be learned
  3. Study storage, where anything submitted in our translator gets stored for future reference
 
-
-## Forked From / Initial Work
-* **Travis Wood**
-* **Matthew Vincent**
-* **Frederic Renken**
-
 ## Authors
 
 * **David Minehan** - *Bug Fixes and Testing* - [PurpleBooth](https://github.com/aminehan)
 * **Sam Henderson** - *Feature Builder (Study Storage)* - [PurpleBooth](https://github.com/shenders13)
 * **Guy Thomas** - *Mobile* - [PurpleBooth](https://github.com/stolemyusername)
 * **Bianca Subion** - *Feature Builder (Live Translation and Translator)* - [PurpleBooth](https://github.com/biancasubion) 
+
+## Forked From / Initial Work
+* **Travis Wood**
+* **Matthew Vincent**
+* **Frederic Renken**

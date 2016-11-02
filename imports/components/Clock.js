@@ -40,14 +40,31 @@ class Clock extends React.Component {
     print = mins + ':' + print;
 
     //toggle between languages every 5 minutes
-    var language = mins % 10 < 5 ? this.state.languages[0] : this.state.languages[1];
-    
+    var current = '';
+    var notCurrent = '';
+
+    if (mins % 10 < 1) {
+      current = this.state.languages[0];
+      notCurrent = this.state.languages[1];
+    } else {
+      current = this.state.languages[1];
+      notCurrent = this.state.languages[0];
+    }
+
     this.setState({
       seconds: secs,
       minutes: mins,
       printable: print,
-      language: language
+      language: current,
+      notLanguage: notCurrent
     });
+  }
+
+  clickHandler(e) {
+    e.preventDefault();
+    console.log('this is the current language', this.state.language);
+    this.props.handleSpeechActive.call();
+    this.props.setCurrentLanguage.call(this, this.state.language, this.state.notLanguage);  
   }
 
 
@@ -69,7 +86,7 @@ class Clock extends React.Component {
           {this.state.printable} 
         </h3>
         <div className="button-wrapper">
-          <button className="toggleButton"  onClick={this.props.handleSpeechActive.bind(this)}> Live Translate! </button>
+          <button className="toggleButton"  onClick={this.clickHandler.bind(this)}> Live Translate! </button>
         </div>
       </div>
     );

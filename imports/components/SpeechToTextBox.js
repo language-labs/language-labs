@@ -9,8 +9,6 @@ class SpeechToTextBox extends React.Component {
 
     this.state = {
     	translatedText: null,
-    	languageToLearn: null,
-    	currentLanguage: null
     };
   }
 
@@ -22,7 +20,10 @@ class SpeechToTextBox extends React.Component {
   	var handleTranslation = function (text) {
   	  var textToTranslate = text;
   	  var sourceLang = languageCodes[context.props.currentLanguage];
-  	  var targetLang = languageCodes[context.props.languageToLearn];
+  	  var targetLang = languageCodes[context.props.oppositeLanguage];
+
+  	  console.log('this is the sourceLang', sourceLang);
+  	  console.log('this is the targetLang', targetLang);
 
   	  var url = 'https://www.googleapis.com/language/translate/v2?key=AIzaSyC9JmWKmSXKwWuB82g3aZKF9yiIczu5pao&q=' + 
   	            textToTranslate +
@@ -83,8 +84,11 @@ class SpeechToTextBox extends React.Component {
   render() {
   	return (
   		<div className='clock'>
-  		  <h4> {'Live translating ' + this.props.currentLanguage + ' to ' + this.props.languageToLearn}  </h4> 
+  		  <h4> {'Live translating ' + ' to ' + this.props.oppositeLanguage}  </h4> 
   		  	<p> {this.state.translatedText} </p>
+  		  	<div className="button-wrapper">
+  		  	  <button className="toggleButton"  onClick={this.props.handleSpeechActive.bind(this)}> Back to the Clock! </button>
+  		  	</div>
   		</div>
 	)
   }

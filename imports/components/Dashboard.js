@@ -26,7 +26,9 @@ class Dashboard extends React.Component {
       partner: false,
       translate: null,
       translated: null,
-      speechToText: false
+      speechToText: false,
+      currentLanguage: null,
+      oppositeLanguage: null,
     };
 
     this.startChat.bind(this);
@@ -124,6 +126,13 @@ class Dashboard extends React.Component {
     });
   }
 
+  setCurrentLanguage(language, oppositeLanguage) {
+    this.setState({
+      currentLanguage: language,
+      oppositeLanguage: oppositeLanguage
+    });
+  }
+
   toggleLoading(loading) {
     this.setState({
       callLoading: loading
@@ -178,9 +187,7 @@ class Dashboard extends React.Component {
       if (err) {
         console.error(err);
       } else {
-        console.log(JSON.parse(body).data.translations[0].translatedText);
         var translatedText = (JSON.parse(body).data.translations[0].translatedText);
-        console.log('this is the translated text', translatedText);
         context.setState({
           translated: translatedText
         });
@@ -242,10 +249,10 @@ class Dashboard extends React.Component {
               <div className="flip-container">
                 <div className="flipper">
                   <div className="front">
-                    <Clock partner={this.state.partner} callDone={this.state.callDone} handleSpeechActive={this.flipCard.bind(this)}/>
+                    <Clock setCurrentLanguage={this.setCurrentLanguage.bind(this)} partner={this.state.partner} callDone={this.state.callDone} handleSpeechActive={this.flipCard.bind(this)}/>
                   </div>
                   <div className="back">
-                    <SpeechToTextBox handleSpeechActive={this.flipCard.bind(this)} currentLanguage={this.props.user.profile.language.toLowerCase()} languageToLearn={this.props.user.profile.learning.toLowerCase()}/>
+                    <SpeechToTextBox handleSpeechActive={this.flipCard.bind(this)} currentLanguage={this.state.currentLanguage} oppositeLanguage={this.state.oppositeLanguage}/>
                   </div>
                 </div>
               </div>

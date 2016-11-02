@@ -1,6 +1,6 @@
 # language-labs
 
-Language Labs is a platform for connecting foreign language learners and facilitating conversations.
+Language Labs is a platform for connecting foreign language learners and facilitating conversations originally built by Travis Wood, Matthew Vincent, and Frederic Renken
 
 ## Contributions
 Initial work from Language Labs included a timer functionality for users to know which language to speak and also conversation starters based on interests

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
-var languageCodes = require( '../../public/languageCodes');
+var code = require( '../../public/languageCodes');
 var request = require('request');
 
 class SpeechToTextBox extends React.Component {
@@ -19,8 +19,8 @@ class SpeechToTextBox extends React.Component {
   	var context = this;
   	var handleTranslation = function (text) {
   	  var textToTranslate = text;
-  	  var sourceLang = languageCodes[context.props.currentLanguage];
-  	  var targetLang = languageCodes[context.props.oppositeLanguage];
+  	  var sourceLang = code.languageCodes[context.props.currentLanguage];
+  	  var targetLang = code.languageCodes[context.props.oppositeLanguage];
 
   	  console.log('this is the sourceLang', sourceLang);
   	  console.log('this is the targetLang', targetLang);
@@ -52,7 +52,7 @@ class SpeechToTextBox extends React.Component {
   	    var recognition = new webkitSpeechRecognition();
   	    recognition.continuous = true; 
   	    recognition.interimResults = true; 
-  	    recognition.lang = "en-US"; 
+  	    recognition.lang = code.speechCodes[context.props.currentLanguage]; 
   	    recognition.maxAlternatives = 1;
 
   	    recognition.onstart = function() {

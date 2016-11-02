@@ -11,8 +11,9 @@ import Waiting           from './Waiting';
 import Welcome           from './Welcome';
 import GoogleTranslate   from './GoogleTranslate';
 import SpeechToTextBox   from './SpeechToTextBox';
+// import {speechCodes, languageCode} from '../../public/languageCodes'
 var request = require('request');
-var languageCodes = require( '../../public/languageCodes');
+var code = require('../../public/languageCodes');
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -172,8 +173,8 @@ class Dashboard extends React.Component {
 
   handleTextSubmit() {
     var textToTranslate = this.state.translate;
-    var sourceLang = languageCodes[this.props.user.profile.language].toLowerCase();
-    var targetLang = languageCodes[this.props.user.profile.learning].toLowerCase();
+    var sourceLang = code.languageCodes[this.props.user.profile.language].toLowerCase();
+    var targetLang = code.languageCodes[this.props.user.profile.learning].toLowerCase();
     var context = this;
 
 

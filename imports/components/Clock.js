@@ -62,9 +62,9 @@ class Clock extends React.Component {
 
   clickHandler(e) {
     e.preventDefault();
-    console.log('this is the current language', this.state.language);
+    console.log('this is the current language', this.state.language.toLowerCase());
     this.props.handleSpeechActive.call();
-    this.props.setCurrentLanguage.call(this, this.state.language, this.state.notLanguage);  
+    this.props.setCurrentLanguage.call(this, this.state.language.toLowerCase(), this.state.notLanguage.toLowerCase());  
   }
 
 

@@ -173,21 +173,28 @@ class Dashboard extends React.Component {
 
   handleTextSubmit() {
     var textToTranslate = this.state.translate;
-    var sourceLang = code.languageCodes[this.props.user.profile.language].toLowerCase();
-    var targetLang = code.languageCodes[this.props.user.profile.learning].toLowerCase();
+    var sourceLang = code.languageCodes[this.props.user.profile.language.toLowerCase()];
+    var targetLang = code.languageCodes[this.props.user.profile.learning.toLowerCase()];
     var context = this;
 
 
 
-    var url = 'https://www.googleapis.com/language/translate/v2?key=AIzaSyC9JmWKmSXKwWuB82g3aZKF9yiIczu5pao&q=' + 
+    var url = 'https://www.googleapis.com/language/translate/v2?ie=UTF-8&oe=UTF-8&key=AIzaSyC9JmWKmSXKwWuB82g3aZKF9yiIczu5pao&q=' + 
               textToTranslate +
               '&source=' + sourceLang + '&'
               + 'target=' + targetLang;
 
-    request.get(url, function(err, res, body) {
+    request({
+      url: url,
+      method: 'GET',
+      headers:  {
+        'content-type': 'application/json'
+      }
+    }, function(err, res, body) {
       if (err) {
         console.error(err);
       } else {
+        console.log(body);
         var translatedText = (JSON.parse(body).data.translations[0].translatedText);
         context.setState({
           translated: translatedText

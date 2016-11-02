@@ -1,0 +1,5 @@
+TODO:
+
+- mobile responsive panels
+- populate DB when user translates a sentence
+- render to 'Study List Component'

@@ -148,10 +148,7 @@ class Dashboard extends React.Component {
 
   handleTextSubmit() {
     var textToTranslate = this.state.translate;
-    console.log('language in props: ', this.props.user.profile.language.toLowerCase());
     var sourceLang = languageCodes[this.props.user.profile.language.toLowerCase()];
-    console.log('language code: ', sourceLang.toLowerCase());
-
     var targetLang = languageCodes[this.props.user.profile.learning.toLowerCase()];
     var context = this;
 
@@ -177,7 +174,22 @@ class Dashboard extends React.Component {
     });
   }
 
+  flipCard() {
+    var classArray = document.querySelector(".flip-container").classList;
+    var isFlippedForward = classArray.contains('flip-forward');
+    var isFlippedBackward = classArray.contains('flip-backward');
+
+    if (isFlippedForward || isFlippedBackward) {
+      document.querySelector(".flip-container").classList.toggle('flip-forward');
+      document.querySelector(".flip-container").classList.toggle('flip-backward');
+    } else {
+      document.querySelector(".flip-container").classList.toggle('flip-forward');
+    }
+  }
+
+
   render() {
+    var context = this;
     return (
       <div className='dashboard'>
         <div className='top'>
@@ -204,12 +216,30 @@ class Dashboard extends React.Component {
               />
             }
           </div>
-          <div className='profile'>
-            <div className='sign-out'>
-              <AccountsUIWrapper />
+
+
+            <div className="flip-container">
+              <div className="flipper">
+                <div className="front">
+                  <div className='profile'>
+                    <div className='sign-out'>
+                      <img src='http://res.cloudinary.com/small-change/image/upload/v1478038849/BitmapIcon_lkjnj3.png'
+                       className='menu-icon' onClick={function(){context.flipCard()}}/>
+                      <AccountsUIWrapper />
+                    </div>
+                    <UserProfile user={this.props.user}/>
+                  </div>
+                </div>
+                <div className="back">
+                  <div className='profile'>
+                  <img src='http://res.cloudinary.com/small-change/image/upload/v1478038849/BitmapIcon_lkjnj3.png'
+                   className='menu-icon' onClick={function(){context.flipCard()}}/>
+                    <p> hello world </p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <UserProfile user={this.props.user}/>
-          </div>
+
         </div>
         <div className='bottom'>
           <div className='text-box'>

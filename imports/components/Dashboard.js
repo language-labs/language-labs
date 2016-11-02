@@ -36,6 +36,7 @@ class Dashboard extends React.Component {
   startChat(users, peer) {
     // save context
     var dashboard = this;
+    var listening = true;
 
     // get html video elements
     var myVideo = this.refs.myVideo;
@@ -68,9 +69,13 @@ class Dashboard extends React.Component {
         // receive a call from other person
         if (!dashboard.state.currentCall) {
           peer.on('call', function (incomingCall) {
+            if ( listening === false) {
+              return;
+            }
             dashboard.setState({ currentCall: incomingCall });
             incomingCall.answer(stream);
             incomingCall.on('stream', function (theirStream) {
+              listening = false;
               dashboard.toggleLoading(false);
               theirVideo.src = URL.createObjectURL(theirStream);
               dashboard.setPartner(theirStream.id);
@@ -83,6 +88,7 @@ class Dashboard extends React.Component {
           var outgoingCall = peer.call(user.profile.peerId, stream);
           dashboard.setState({ currentCall: outgoingCall });
           outgoingCall.on('stream', function (theirStream) {
+            listening = false;
             dashboard.toggleLoading(false);
             theirVideo.src = URL.createObjectURL(theirStream);
             dashboard.setPartner(theirStream.id);

@@ -83,11 +83,8 @@ class SpeechToTextBox extends React.Component {
   render() {
   	return (
   		<div className='clock'>
-  		  <h4> Live Translate </h4> 
+  		  <h4> {'Live translating ' + this.props.currentLanguage + ' to ' + this.props.languageToLearn}  </h4> 
   		  	<p> {this.state.translatedText} </p>
-  		  	<div className="button-wrapper">
-		  		<button className="toggleButton" onClick={this.props.handleSpeechActive} > Clock! </button>
-	  		</div> 
   		</div>
 	)
   }

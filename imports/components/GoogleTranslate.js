@@ -22,8 +22,7 @@ const GoogleTranslate = ({handleTextChange, handleTextSubmit, translated}) => {
 			</div>
 		  </div>
 		);
-	}	
-
+	}
 }
 
 export default GoogleTranslate;

@@ -49,6 +49,7 @@ class Review extends React.Component {
           submit={()=> {
             this.handleSubmit.call(this);
             setTimeout(() => this.props.clearPartner(), 0);
+            location.reload();
           }}
         />
       </div>

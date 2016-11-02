@@ -148,12 +148,12 @@ class Dashboard extends React.Component {
     });
   };
 
-  handleSpeechActive(e) {
-    console.log('hit live translate button!');
-    this.setState({
-      speechToText: !this.state.speechToText
-    });
-  }
+  // handleSpeechActive(e) {
+  //   console.log('hit live translate button!');
+  //   this.setState({
+  //     speechToText: !this.state.speechToText
+  //   });
+  // }
 
   handleTextSubmit() {
     var textToTranslate = this.state.translate;
@@ -182,6 +182,16 @@ class Dashboard extends React.Component {
       }
     });
   }
+
+
+  flipCard() {
+     console.log(document.querySelector(".flip-container").className);
+      if (document.querySelector(".flip-container").className.includes('flip-activate')) {
+        document.querySelector(".flip-container").className = "flip-container"
+      } else {
+        document.querySelector(".flip-container").className += ' flip-activate'
+      }
+   }
 
   render() {
     return (
@@ -219,18 +229,23 @@ class Dashboard extends React.Component {
         </div>
         <div className='bottom'>
           <div className='text-box'>
-            { 
-              this.state.partner &&
-              <div className='clock-suggestion-wrapper'> 
-              {
-                !this.state.speechToText ? 
-                <Clock partner={this.state.partner} callDone={this.state.callDone} handleSpeechActive={this.handleSpeechActive.bind(this)}/>
-                :
-                <SpeechToTextBox handleSpeechActive={this.handleSpeechActive.bind(this)} currentLanguage={this.props.user.profile.language.toLowerCase()} languageToLearn={this.props.user.profile.learning.toLowerCase()}/>
-              }
-                <GoogleTranslate translated={this.state.translated} handleTextChange={this.handleTextChange.bind(this)} handleTextSubmit={this.handleTextSubmit.bind(this)}/>
+          {
+            this.state.partner &&
+
+            <div className="clock-suggestion-wrapper">
+              <div className="flip-container">
+                <div className="flipper">
+                  <div className="front">
+                    <Clock partner={this.state.partner} callDone={this.state.callDone} handleSpeechActive={this.flipCard.bind(this)}/>
+                  </div>
+                  <div className="back">
+                    <SpeechToTextBox handleSpeechActive={this.flipCard.bind(this)} currentLanguage={this.props.user.profile.language.toLowerCase()} languageToLearn={this.props.user.profile.learning.toLowerCase()}/>
+                  </div>
+                </div>
               </div>
-            }
+              <GoogleTranslate translated={this.state.translated} handleTextChange={this.handleTextChange.bind(this)} handleTextSubmit={this.handleTextSubmit.bind(this)}/>
+            </div>
+          }
             {
               !this.state.partner &&
               <div className='waiting-for-match'>Waiting for match...</div>

@@ -12,10 +12,10 @@ Additional features built by us:
 
 ## Authors
 
-* **David Minehan** - *Bug Fixes and Testing* - [PurpleBooth](https://github.com/aminehan)
-* **Sam Henderson** - *Feature Builder (Study Storage)* - [PurpleBooth](https://github.com/shenders13)
-* **Guy Thomas** - *Mobile* - [PurpleBooth](https://github.com/stolemyusername)
-* **Bianca Subion** - *Feature Builder (Live Translation and Translator)* - [PurpleBooth](https://github.com/biancasubion) 
+* **David Minehan** - *Bug Fixes and Testing* - [aminehan](https://github.com/aminehan)
+* **Sam Henderson** - *Feature Builder (Study Storage)* - [shenders13](https://github.com/shenders13)
+* **Guy Thomas** - *Mobile* - [stolemyusername](https://github.com/stolemyusername)
+* **Bianca Subion** - *Feature Builder (Live Translation and Translator)* - [biancasubion](https://github.com/biancasubion) 
 
 ## Forked From / Initial Work
 * **Travis Wood**

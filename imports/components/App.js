@@ -13,7 +13,7 @@ const validateProfile = (obj, ...args) => {
     obj = obj[args[i]];
   }
   return true;
-}
+} 
 
 
 const App = ({

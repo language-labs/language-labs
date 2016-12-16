@@ -1,4 +1,8 @@
 # language-labs
+<p align="center">
+  <img src="/screenshots/LanguageLabs.UsePic.jpg?raw=true"/>
+</p>
+
 
 > A platform for connecting foreign language learners and facilitating conversations. 
 

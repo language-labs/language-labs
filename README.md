@@ -1,4 +1,8 @@
 # language-labs
+<p align="center">
+  <img src="/screenshots/LanguageLabs.UsePic.jpg?raw=true"/>
+</p>
+
 
 > A platform for connecting foreign language learners and facilitating conversations. 
 
@@ -10,4 +14,4 @@
   
 ## Usage
 
-> Select your desired conversation language. Get paired with other language learners who want to practice the same language.
+> Select what your native language is and what language you would like to learn. You will be paired to speak with someone who's native language is the one you would like to learn and who wants to learn your native language. Switch off between each language and help eachother out!

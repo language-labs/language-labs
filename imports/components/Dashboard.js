@@ -9,6 +9,9 @@ import TopicSuggestion   from './TopicSuggestion';
 import Review            from './Review';
 import Waiting           from './Waiting';
 import Welcome           from './Welcome';
+import GoogleTranslate   from './GoogleTranslate';
+var request = require('request');
+var languageCodes = require( '../../public/languageCodes');
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -19,7 +22,9 @@ class Dashboard extends React.Component {
       currentCall: false,
       callDone: false,
       callLoading: false,
-      partner: false
+      partner: false,
+      translate: null,
+      translated: null
     };
 
     this.startChat.bind(this);
@@ -133,7 +138,58 @@ class Dashboard extends React.Component {
     });
   }
 
+  handleTextChange(e) {
+    var text = e.target.value;
+    this.setState({
+      translate: text,
+      translated: null
+    });
+  };
+
+  handleTextSubmit() {
+    var textToTranslate = this.state.translate;
+    var sourceLang = languageCodes[this.props.user.profile.language.toLowerCase()];
+    var targetLang = languageCodes[this.props.user.profile.learning.toLowerCase()];
+    var context = this;
+
+
+
+    var url = 'https://www.googleapis.com/language/translate/v2?key=AIzaSyC9JmWKmSXKwWuB82g3aZKF9yiIczu5pao&q=' + 
+              textToTranslate +
+              '&source=' + sourceLang + '&'
+              + 'target=' + targetLang;
+
+    request.get(url, function(err, res, body) {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log(JSON.parse(body).data.translations[0].translatedText);
+        var translatedText = (JSON.parse(body).data.translations[0].translatedText);
+        console.log('this is the translated text', translatedText);
+        context.setState({
+          translated: translatedText
+        });
+        console.log('this is what state looks like', context.state.translated);
+      }
+    });
+  }
+
+  flipCard() {
+    var classArray = document.querySelector(".flip-container").classList;
+    var isFlippedForward = classArray.contains('flip-forward');
+    var isFlippedBackward = classArray.contains('flip-backward');
+
+    if (isFlippedForward || isFlippedBackward) {
+      document.querySelector(".flip-container").classList.toggle('flip-forward');
+      document.querySelector(".flip-container").classList.toggle('flip-backward');
+    } else {
+      document.querySelector(".flip-container").classList.toggle('flip-forward');
+    }
+  }
+
+
   render() {
+    var context = this;
     return (
       <div className='dashboard'>
         <div className='top'>
@@ -160,12 +216,30 @@ class Dashboard extends React.Component {
               />
             }
           </div>
-          <div className='profile'>
-            <div className='sign-out'>
-              <AccountsUIWrapper />
+
+
+            <div className="flip-container">
+              <div className="flipper">
+                <div className="front">
+                  <div className='profile'>
+                    <div className='sign-out'>
+                      <img src='http://res.cloudinary.com/small-change/image/upload/v1478038849/BitmapIcon_lkjnj3.png'
+                       className='menu-icon' onClick={function(){context.flipCard()}}/>
+                      <AccountsUIWrapper />
+                    </div>
+                    <UserProfile user={this.props.user}/>
+                  </div>
+                </div>
+                <div className="back">
+                  <div className='profile'>
+                  <img src='http://res.cloudinary.com/small-change/image/upload/v1478038849/BitmapIcon_lkjnj3.png'
+                   className='menu-icon' onClick={function(){context.flipCard()}}/>
+                    <p> hello world </p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <UserProfile user={this.props.user}/>
-          </div>
+
         </div>
         <div className='bottom'>
           <div className='text-box'>
@@ -173,7 +247,7 @@ class Dashboard extends React.Component {
               this.state.partner &&
               <div className='clock-suggestion-wrapper'>
                 <Clock partner={this.state.partner} callDone={this.state.callDone} />
-                <TopicSuggestion partner={this.state.partner}/>
+                <GoogleTranslate translated={this.state.translated} handleTextChange={this.handleTextChange.bind(this)} handleTextSubmit={this.handleTextSubmit.bind(this)}/>
               </div>
             }
             {
